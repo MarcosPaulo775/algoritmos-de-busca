@@ -1,6 +1,7 @@
 package algoritmos;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import model.Node;
@@ -13,6 +14,10 @@ public class DijkstraSearch implements SearchStrategy {
 
 	@Override
 	public List<Integer> getWay(Node start, Node end) {
+
+		if (start.name == end.name || start == end) {
+			this.isFound = true;
+		}
 
 		if (start.way.size() == 0) {
 			System.out.println(start.name);
@@ -74,8 +79,6 @@ public class DijkstraSearch implements SearchStrategy {
 
 						if (this.auxList.contains(start.nextNode.get(i)) || start.nextNode.get(i).name == end.name) {
 
-							// System.out.println("CONTAINS : " + start.nextNode.get(i).name);
-
 							Node node = new Node(start.nextNode.get(i).name);
 
 							// Adiciona o caminho do no anterior
@@ -113,11 +116,11 @@ public class DijkstraSearch implements SearchStrategy {
 				}
 
 				this.auxList.remove(0);
-				if (this.auxList.get(0).name == end.name || this.auxList.get(0) == end) {
-					this.isFound = true;
+
+				if (this.auxList.size() != 0) {
+					this.sortList(this.auxList);
+					this.getWay(this.auxList.get(0), end);
 				}
-				this.sortList(this.auxList);
-				this.getWay(this.auxList.get(0), end);
 
 			}
 
@@ -127,46 +130,8 @@ public class DijkstraSearch implements SearchStrategy {
 	}
 
 	public List<Node> sortList(List<Node> list) {
-		Node aux = new Node(null);
 
-		for (int i = 0; i < list.size(); i++) {
-			for (int j = 0; j < list.size(); j++) {
-				if (list.get(i).amount < list.get(j).amount) {
-
-					aux.name = list.get(i).name;
-					aux.nextNode = new ArrayList<Node>();
-					aux.nextNode = list.get(i).nextNode;
-					aux.nextNodeDistance = new ArrayList<Integer>();
-					aux.nextNodeDistance = list.get(i).nextNodeDistance;
-					aux.way = new ArrayList<Integer>();
-					aux.way = list.get(i).way;
-					aux.amount = list.get(i).amount;
-
-					// *****************************************************
-
-					list.get(i).name = list.get(j).name;
-					list.get(i).nextNode = list.get(j).nextNode;
-					list.get(i).nextNodeDistance = list.get(j).nextNodeDistance;
-					list.get(i).way = list.get(j).way;
-					list.get(i).amount = list.get(j).amount;
-
-					// *****************************************************
-
-					list.get(j).name = aux.name;
-					list.get(j).nextNode = aux.nextNode;
-					list.get(j).nextNodeDistance = aux.nextNodeDistance;
-					list.get(j).way = aux.way;
-					list.get(j).amount = aux.amount;
-
-					System.out.println("XXXXXXXXXXXXXXX");
-					System.out.println("list i = " + list.get(i).nextNode.get(0).way);
-					System.out.println("list j = " + list.get(j).nextNode.get(0).way);
-					System.out.println("aux = " + aux.nextNode.get(0).way);
-					System.out.println("XXXXXXXXXXXXXXX");
-
-				}
-			}
-		}
+		Collections.sort(list);
 
 		System.out.println(" - - - - - - - - - - - - - - - -");
 		for (int i = 0; i < list.size(); i++) {

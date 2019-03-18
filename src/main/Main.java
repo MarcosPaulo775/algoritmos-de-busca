@@ -47,7 +47,7 @@ public class Main {
 
 		// searchEngine.deep.printWay(GO, searchEngine.deep.getWay(GO, PO));
 		// searchEngine.width.printWay(GO, searchEngine.width.getWay(GO, IP));
-		searchEngine.dijkstra.printWay(GO, searchEngine.dijkstra.getWay(GO, ED));
+		searchEngine.dijkstra.printWay(GO, searchEngine.dijkstra.getWay(GO, MO));
 
 	}
 

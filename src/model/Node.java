@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Node {
+public class Node implements Comparable<Node> {
 
 	public String name;
 	public List<Node> nextNode;
@@ -46,6 +46,17 @@ public class Node {
 				this.amount += way.get(i);
 			}
 		}
+	}
+
+	@Override
+	public int compareTo(Node o) {
+		if (this.amount < o.amount) {
+			return -1;
+		}
+		if (this.amount > o.amount) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
